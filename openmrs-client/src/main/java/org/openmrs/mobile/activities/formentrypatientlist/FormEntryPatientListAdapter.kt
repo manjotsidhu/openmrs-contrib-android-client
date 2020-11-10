@@ -13,6 +13,7 @@
  */
 package org.openmrs.mobile.activities.formentrypatientlist
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +41,11 @@ class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFrag
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { visit: Visit? ->
                     if (visit != null) {
-                        val icon = mContext.resources.getDrawable(R.drawable.active_visit_dot)
+                        val icon = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            mContext.resources.getDrawable(R.drawable.active_visit_dot, mContext.context?.theme)
+                        } else {
+                            mContext.resources.getDrawable(R.drawable.active_visit_dot)
+                        }
                         icon.setBounds(0, 0, icon.intrinsicHeight, icon.intrinsicWidth)
                         holder.mVisitStatus.setCompoundDrawables(icon, null, null, null)
                         holder.mVisitStatus.text = mContext.getString(R.string.active_visit_label_capture_vitals)
