@@ -34,7 +34,7 @@ class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFrag
     }
 
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
-        val adapterPos = holder.adapterPosition
+        val adapterPos = holder.layoutPosition
         val patient = this.mItems?.get(position)
         VisitDAO().getActiveVisitByPatientId(patient?.id)
                 .observeOn(AndroidSchedulers.mainThread())
